@@ -11,3 +11,5 @@ bataille navale
   
 
 
+
+LATER ON : HAVE 2 DIFFICULTY MODES > Easy(AI only strikes randomly) and Normal (AI strikes following a logic,if it hits a boat, it will try to hit the surroundings of the boat)
