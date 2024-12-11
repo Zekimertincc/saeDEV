@@ -1,1 +1,3 @@
-//Balls
+public class Main {
+
+}

@@ -71,31 +71,24 @@ public class methodesJeuNaval {
 
             System.out.println("??? regles ???");
             System.out.println("??? donner cordinates pour bat1 ??? commence avec X et après Y");
-            int coordones = scanner.nextInt();
-            if (coordones == bateauxLong1.length) {
-                for (int i = 0; i < bateauxLong1.length; i++) {
-                    bateauxLong1[i] = scanner.nextInt()  ;
-                    counter++;
-                }
-            }
+             bateauxLong1 = saisirBat(1);
+
 
             System.out.println("??? donner cordinates pour bat2 ???");
-            coordones = scanner.nextInt();
-            if (coordones == bateauxLong2.length) {
+
                 for (int i = 0; i < bateauxLong1.length; i++) {
                     bateauxLong2[i] = scanner.nextInt()  ;
                     counter++;
                 }
-            }
+
 
             System.out.println("??? donner cordinates pour bat3 ??? User mets coordonnées X et Y du début du bateau et X et Y de la fin du bateau");
-            coordones = scanner.nextInt();
-            if (coordones == bateauxLong3.length) {
+
                 for (int i = 0; i < bateauxLong1.length; i++) {
                     bateauxLong3[i] = scanner.nextInt()  ;
                     counter++;
                 }
-            }
+
 
 
             if(counter == 10 ){
@@ -116,6 +109,53 @@ public class methodesJeuNaval {
 
 
 
+    }
+
+    public static int[] saisirBat(int longeur){
+        int tab[] = new int[longeur];
+        Scanner scanner = new Scanner(System.in);
+        int i = 0;
+        boolean saisieCorrect = false;
+
+            if (longeur>1){
+                do {
+                    System.out.println("Saisir x apres y et apres la direction du bateaux");
+                    for (int j = 0; j < 3; j++) {
+                        i = scanner.nextInt();
+                        if (i < 1 || i > 10) {
+                            System.out.println("t'as mal saisies");
+                        }else{
+                            tab[j] = scanner.nextInt();
+                            saisieCorrect= true;
+                        }
+
+
+                    }
+                }while (!saisieCorrect);
+
+            }else{
+
+                do {
+                    System.out.println("Saisir x apres y et apres la direction du bateaux");
+                    for (int j = 0; j < 2; j++) {
+                        i = scanner.nextInt();
+                        if (i < 1 || i > 10) {
+                            System.out.println("t'as mal saisies");
+                        }else{
+                            tab[j] = scanner.nextInt();
+                            saisieCorrect= true;
+                        }
+
+
+                    }
+                }while (!saisieCorrect);
+            }
+
+
+
+
+
+        return tab;
     }
 
 
