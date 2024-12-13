@@ -2,7 +2,4 @@
 bataille navale 
 
 TODO LIST
-1-DESSINER TABLAUX 
-2-CREER DES BATEAUX
-3-SAISI BATEAUX
-4-
+1- check if the direction selected fits the table 
