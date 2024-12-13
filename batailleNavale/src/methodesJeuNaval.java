@@ -1,3 +1,4 @@
+import java.util.Arrays;
 import java.util.Scanner;
 
 public class methodesJeuNaval {
@@ -8,9 +9,15 @@ public class methodesJeuNaval {
         String[][] plateau = new String[11][11];
         remplirPlateauVide(plateau);
         numéroterPlateau(plateau);
-        saisirBateaux(plateau);
-
+        //saisirBateaux(plateau);
         afficherPlateau(plateau);
+        int longueur=3;
+        int[]bateau1test=new int[longueur];
+
+        bateau1test=saisirBat(longueur);
+        for (int i=0;i<longueur;i++){
+            System.out.println(bateau1test[i]);
+        }
 
     }
 
@@ -115,6 +122,7 @@ public class methodesJeuNaval {
         int tab[] = new int[longeur];
         Scanner scanner = new Scanner(System.in);
         int i = 0;
+        int cpt=0;
         boolean saisieCorrect = false;
 
             if (longeur>1){
@@ -122,32 +130,35 @@ public class methodesJeuNaval {
                     System.out.println("Saisir x apres y et apres la direction du bateaux");
                     for (int j = 0; j < 3; j++) {
                         i = scanner.nextInt();
-                        if (i < 1 || i > 10) {
+                        while (i < 1 || i > 10) {
                             System.out.println("t'as mal saisies");
-                        }else{
+                            i=scanner.nextInt();
+                        }
                             tab[j] = scanner.nextInt();
                             saisieCorrect= true;
                         }
 
 
-                    }
+
                 }while (!saisieCorrect);
 
             }else{
 
                 do {
-                    System.out.println("Saisir x apres y et apres la direction du bateaux");
+                    System.out.println("Saisir x apres y ");
                     for (int j = 0; j < 2; j++) {
                         i = scanner.nextInt();
-                        if (i < 1 || i > 10) {
+                        while (cpt<tab.length && (i < 1 || i > 10)) {
                             System.out.println("t'as mal saisies");
-                        }else{
+                            i=scanner.nextInt();
+                            cpt++;
+                        }
                             tab[j] = scanner.nextInt();
                             saisieCorrect= true;
                         }
 
 
-                    }
+
                 }while (!saisieCorrect);
             }
 
@@ -159,10 +170,12 @@ public class methodesJeuNaval {
     }
 
 
-    public static void mettreBateuxSurPlateaux(int[]b1, int[]b2, int[]b3,String[][] plateau) {
 
 
-    }
+    //public static void mettreBateuxSurPlateaux(int[]b1, int[]b2, int[]b3,String[][] plateau) {
+
+
+    //}
 
 
 }
