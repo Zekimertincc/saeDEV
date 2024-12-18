@@ -1,18 +1,24 @@
 import java.util.Arrays;
 import java.util.Scanner;
+import java.util.ArrayList;
+
+
 
 public class methodesJeuNaval {
 //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
-    //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
 
-
+//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 TOKEN DENIS
     public static void main(String[] args) {
         Scanner scanner = new Scanner(System.in);
         String[][] plateau = new String[11][11];
         remplirPlateauVide(plateau);
         numéroterPlateau(plateau);
-        //saisirBateaux(plateau);
-        afficherPlateau(plateau);
+
+        ArrayList<Integer> bateau1=saisirBat(1);
+        ArrayList<Integer> bateau2=saisirBat(2);
+        ArrayList<Integer> bateau3=saisirBat(3);
+
+        //afficherPlateau(plateau);
 
 
     }
@@ -57,88 +63,146 @@ public class methodesJeuNaval {
         }
     }
 
-
-    public static void saisirBateaux(String[][] plateau) { //Cette procédure demande à l'utilisateur d'entrer plusieurs données:
+/*
+    public static void saisieLongueurBateaux() { //Cette procédure demande à l'utilisateur d'entrer plusieurs données:
         // -Les coordonnées X et Y d'un bateau de longueur 1
         // -Les coordonnées X et Y du début du bateau de longueur 2 ainsi que les coordonnées X et Y de la fin
         // - Idem pour longueur 3
         Scanner scanner = new Scanner(System.in);
         int taillebat ;
-        boolean touteBienSaisie = false;
+        int nbBat ;
+
+
+
+
+
+
 
 
             System.out.println("quelle taille de bateaux");
             taillebat = scanner.nextInt();
-            int bat1[]=  new int[taillebat + 1 ];
-            bat1= saisirBat(taillebat);
-            for (int i = 0; i < taillebat +1 ; i++) {
-                System.out.println(bat1[i]);
+            ArrayList<Integer> bat1 = new ArrayList<Integer>();
+            bat1=  saisirBat(taillebat);
+            for (int i = 0; i < bat1.size() ; i++) {
+                int current = bat1.get(i);
+                System.out.println(current);
             }
+
 
             System.out.println("quelle taille de bateaux");
             taillebat = scanner.nextInt();
-            int bat2[]= new int[taillebat +1 ];
-            bat2= saisirBat(taillebat);
-            for (int i = 0; i < bat2.length  ; i++) {
-                System.out.println(bat2[i]);
+            ArrayList<Integer> bat2 = new ArrayList<Integer>();
+            bat2=  saisirBat(taillebat);
+            for (int i = 0; i < bat2.size() ; i++) {
+                int current = bat2.get(i);
+                System.out.println(current);
             }
+
+
 
             System.out.println("quelle taille de bateaux");
             taillebat = scanner.nextInt();
-            int bat3[]= new int[taillebat];
-            bat3= saisirBat(taillebat);
-            for (int i = 0; i < taillebat; i++) {
-                System.out.println(bat3[i]);
+            ArrayList<Integer> bat3 = new ArrayList<Integer>();
+            bat3=  saisirBat(taillebat);
+            for (int i = 0; i < bat3.size() ; i++) {
+                int current = bat3.get(i);
+                System.out.println(current);
             }
+
 
 
 
 
 
     }
+*/
+    public static boolean peutEtrePlacé(int[] tab){
+        boolean toutVerifié=false;
+        boolean toutOk=false;
+        int i=0;
 
-    public static int[] saisirBat(int longueur) {
-        int tab[] = new int[longueur + 1 ];
+
+
+
+
+        while(toutVerifié && i<9){
+            if(bateau1)
+        }
+    }
+
+
+    public static ArrayList<Integer>  saisirBat(int longueur) {
+        int saisie;
+        boolean saisieCorrecte = false;
+        int counter = 0;
         Scanner scanner = new Scanner(System.in);
-        int cpt = 0;
-        boolean saisieCorrect = false;
+        ArrayList<Integer> tab = new ArrayList<Integer>();
+            if (longueur>1){
 
-            if (longeur>1){
-                do {
-                    System.out.println("Saisir x apres y et apres la direction du bateaux");
-                    for (int j = 0; j < 3; j++) {
-                        i = scanner.nextInt();
-                        while (i < 1 || i > 10) {
-                            System.out.println("t'as mal saisies");
-                            i=scanner.nextInt();
+                do{
+                    System.out.println("donner x et y apres");
+                    for (int i = 0; i < 2 ; i++) {
+                        saisie = scanner.nextInt();
+                        tab.add(saisie);
+                        if ( saisie<= 10 && saisie>= 1 ){
+                            counter++;
                         }
-                            tab[j] = scanner.nextInt();
-                            saisieCorrect= true;
-                        }
+                    }
+                    System.out.println("saisir la direction de la façon suivante : 1 pour nord 2 pour sud 3 pour est et 4 pour ouest");
+                    saisie = scanner.nextInt();
+                    tab.add(saisie);
+                    if (saisie<= 4 && saisie>= 1 ){
+                        counter++;
+                    }
+                    if (counter == 3){
+                        saisieCorrecte = true;
+                    }
+
+                }while (!saisieCorrecte);
 
 
 
-                }while (!saisieCorrect);
-
-            }else{
-
-                do {
-                    System.out.println("Saisir x apres y ");
-                    for (int j = 0; j < 2; j++) {
-                        i = scanner.nextInt();
-                        while (cpt<tab.length && (i < 1 || i > 10)) {
-                            System.out.println("t'as mal saisies");
-                            i=scanner.nextInt();
-                            cpt++;
-                        }
-                            tab[j] = scanner.nextInt();
-                            saisieCorrect= true;
-                        }
-
-
-
-                }while (!saisieCorrect);
             }
+            else{
+
+                do{
+                    System.out.println("donner x et y apres");
+                    for (int i = 0; i < 2 ; i++) {
+                        saisie = scanner.nextInt();
+                        tab.add(saisie);
+                        if ( saisie<= 10 && saisie>= 1 ){
+                            counter++;
+                        }
+                    }
+
+                    if (counter == 2){
+                        saisieCorrecte = true;
+                    }
+
+                }while (!saisieCorrecte);
+
+
+            }
+
+        return tab;
+
+
+        }
+
+
+
+        public static void ajouterSurPlateau(String[][] plateaux , ArrayList<Integer> tab){
+
+            ArrayList<Integer> bateau1 = new ArrayList<>();
+            bateau1=saisirBat(1);
+            
+
+
+
+
+
+
+
 
 
 
@@ -146,7 +210,52 @@ public class methodesJeuNaval {
 
 
 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
     }
+
+
+
+
+
 
 
     //public static void mettreBateuxSurPlateaux(int[]b1, int[]b2, int[]b3,String[][] plateau) {
