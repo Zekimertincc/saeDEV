@@ -316,8 +316,9 @@ public class methodesJeuNaval {
 
 */
         public static void ajouterSurPlateau(String[][] plateau) {
-        int[] directionsX = {0, 0, 1, -1};
-        int[] directionsY = {1, -1, 0, 0}; // Sağ, Sol, Aşağı, Yukarı için Y değişimleri
+
+        int[] directionsX = {-1, 1, 0, 0};
+        int[] directionsY = {0, 0, 1, -1};
 
         for (int i = 1; i <= 3; i++) {
             ArrayList<Integer> bateau = saisirBat(i);
@@ -326,18 +327,24 @@ public class methodesJeuNaval {
             if (peutPlacer) {
                 int x = bateau.get(0);
                 int y = bateau.get(1);
+
                 plateau[x][y] = "X";
 
                 if (i > 1) {
                     int dir = bateau.get(2);
-                    for (int j = 1; j < i; j++) { // Geminin devamını yerleştir
+                    for (int j = 1; j < i; j++) {
                         int newX = x + (j * directionsX[dir - 1]);
                         int newY = y + (j * directionsY[dir - 1]);
-                        plateau[newX][newY] = "X";
+                        if (newX >= 0 && newX < plateau.length && newY >= 0 && newY < plateau[0].length) {
+                            plateau[newX][newY] = "X";
+                        }
                     }
+
+
+
                 }
             } else {
-                System.out.println("Gemi #" + i + " geçersiz pozisyonda, lütfen tekrar deneyin.");
+                System.out.println("mal saise le bateaux." + i);
             }
         }
     }
