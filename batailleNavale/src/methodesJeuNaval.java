@@ -9,15 +9,15 @@ public class methodesJeuNaval {
 
 //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 TOKEN DENIS
     public static void main(String[] args) {
-        Scanner scanner = new Scanner(System.in);
+
         String[][] plateau = new String[11][11];
-        remplirPlateauVide(plateau);
-        numéroterPlateau(plateau);
+        String[][]plateauOrdi = new String[11][11];
 
-        afficherPlateau(plateau);
-        ajouterSurPlateau(plateau);
-        afficherPlateau(plateau);
-
+        remplirPlateauVide(plateauOrdi);
+        numéroterPlateau(plateauOrdi);
+        afficherPlateau(plateauOrdi);
+        saisirBateauxPlateauOrdi(plateauOrdi);
+        afficherPlateau(plateauOrdi);
     }
 
 
@@ -62,59 +62,6 @@ public class methodesJeuNaval {
 
     }
 
-/*
-    public static void saisieLongueurBateaux() { //Cette procédure demande à l'utilisateur d'entrer plusieurs données:
-        // -Les coordonnées X et Y d'un bateau de longueur 1
-        // -Les coordonnées X et Y du début du bateau de longueur 2 ainsi que les coordonnées X et Y de la fin
-        // - Idem pour longueur 3
-        Scanner scanner = new Scanner(System.in);
-        int taillebat ;
-        int nbBat ;
-
-
-
-
-
-
-
-
-            System.out.println("quelle taille de bateaux");
-            taillebat = scanner.nextInt();
-            ArrayList<Integer> bat1 = new ArrayList<Integer>();
-            bat1=  saisirBat(taillebat);
-            for (int i = 0; i < bat1.size() ; i++) {
-                int current = bat1.get(i);
-                System.out.println(current);
-            }
-
-
-            System.out.println("quelle taille de bateaux");
-            taillebat = scanner.nextInt();
-            ArrayList<Integer> bat2 = new ArrayList<Integer>();
-            bat2=  saisirBat(taillebat);
-            for (int i = 0; i < bat2.size() ; i++) {
-                int current = bat2.get(i);
-                System.out.println(current);
-            }
-
-
-
-            System.out.println("quelle taille de bateaux");
-            taillebat = scanner.nextInt();
-            ArrayList<Integer> bat3 = new ArrayList<Integer>();
-            bat3=  saisirBat(taillebat);
-            for (int i = 0; i < bat3.size() ; i++) {
-                int current = bat3.get(i);
-                System.out.println(current);
-            }
-
-
-
-
-
-
-    }
-*/
     public static boolean peutEtrePlacé(ArrayList<Integer> tab, String[][] plateau, int l ) {
         boolean dispo = true;
         int x = tab.get(0);
@@ -212,109 +159,6 @@ public class methodesJeuNaval {
 
         }
 
-
-/*
-        public static void ajouterSurPlateau(String[][] plateaux ){
-
-            boolean peutPlacer ;
-            int x ;
-            int y ;
-            int dir;
-            int counter = 0;
-
-
-
-                ArrayList<Integer> bateau1 = new ArrayList<>();
-                bateau1=saisirBat(1);
-                peutPlacer =  peutEtrePlacé(bateau1, plateaux,1);
-                if (peutPlacer){
-                    x = bateau1.get(0);
-                    y = bateau1.get(1);
-
-                    plateaux[x][y] = "X";
-                    counter++;
-                }
-                else {
-                    System.out.println("tas mal saisie le premier bateaux");
-
-                }
-
-
-                ArrayList<Integer> bateau2 = new ArrayList<>();
-                bateau2=saisirBat(2);
-                peutPlacer =  peutEtrePlacé(bateau2, plateaux,2);
-                if (peutPlacer){
-                    x = bateau2.get(0);
-                    y = bateau2.get(1);
-                    dir = bateau2.get(2);
-                    plateaux[x][y] = "X";
-                    if (dir == 1 ){
-                        plateaux[x][y+1] = "X";
-                    }
-                    else if(dir == 2){
-                        plateaux[x][y-1] = "X";
-                    }
-                    else if (dir == 3){
-                        plateaux[x+1][y] = "X";
-                    }
-                    else {
-                        plateaux[x-1][y] = "X";
-                    }
-                }
-                else {
-                    System.out.println("tas mal saisie le deuxieme bateaux");
-
-                }
-
-
-
-                ArrayList<Integer> bateau3 = new ArrayList<>();
-                bateau3=saisirBat(3);
-                peutPlacer =  peutEtrePlacé(bateau3, plateaux,3);
-                if (peutPlacer){
-                    x = bateau2.get(0);
-                    y = bateau2.get(1);
-                    dir = bateau2.get(2);
-                    plateaux[x][y] = "X";
-                    if (dir == 1 ){
-                        plateaux[x][y+1] = "X";
-                        plateaux[x][y+2] = "X";
-                    }
-                    else if(dir == 2){
-                        plateaux[x][y-1] = "X";
-                        plateaux[x][y-2] = "X";
-                    }
-                    else if (dir == 3){
-                        plateaux[x+1][y] = "X";
-                        plateaux[x+2][y] = "X";
-                    }
-                    else {
-                        plateaux[x-1][y] = "X";
-                        plateaux[x-2][y] = "X";
-                    }
-                }
-                else {
-                    System.out.println("tas mal saisie le deuxieme bateaux");
-
-                }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-        }
-
-*/
         public static void ajouterSurPlateau(String[][] plateau) {
 
         int[] directionsX = {-1, 1, 0, 0};
@@ -350,10 +194,51 @@ public class methodesJeuNaval {
     }
 
 
+    public static void setupJeux(String[][] plateau,String[][]plateauOrdi){
+        remplirPlateauVide(plateau);
+        remplirPlateauVide(plateauOrdi);
+        numéroterPlateau(plateau);
+        numéroterPlateau(plateauOrdi);
+
+        afficherPlateau(plateau);
+        ajouterSurPlateau(plateau);
+        afficherPlateau(plateau);
+
+    }
+
+
+
+    public static void saisirBateauxPlateauOrdi(String[][] plateauOrdi) {
+        int max = 10;
+        int min = 1;
+        int range = max - min + 1;
+        int[] directionsX = {-1, 1, 0, 0};
+        int[] directionsY = {0, 0, 1, -1};
+        String[][] plateau = plateauOrdi;
+
+        for (int i = 1; i < 4; i++) {
+            int longBateaux = (int)(Math.random()*3)+1;
+            int randX = (int) (Math.random() * range) + min;
+            int randY = (int) (Math.random() * range) + min;
+            plateau[randX][randY] = "X";
+            if (longBateaux > 1){
+                int randDir = (int)(Math.random()*4) +1;
+                for (int j = 1; j < longBateaux; j++) {
+                    int newX = randX + (j * directionsX[randDir - 1]);
+                    int newY =  randY+ (j * directionsY[randDir - 1]);
+                    if (newX >= 0 && newX < plateau.length && newY >= 0 && newY < plateau[0].length) {
+                        plateau[newX][newY] = "X";
+                    }
+                }
+            }
+
+        }
 
 
 
 
+
+    }
 
 
 
