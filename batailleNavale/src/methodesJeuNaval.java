@@ -13,11 +13,7 @@ public class methodesJeuNaval {
         String[][] plateau = new String[11][11];
         String[][]plateauOrdi = new String[11][11];
 
-        remplirPlateauVide(plateauOrdi);
-        numéroterPlateau(plateauOrdi);
-        afficherPlateau(plateauOrdi);
-        saisirBateauxPlateauOrdi(plateauOrdi);
-        afficherPlateau(plateauOrdi);
+        setupJeux(plateau, plateauOrdi);
     }
 
 
@@ -63,41 +59,53 @@ public class methodesJeuNaval {
     }
 
     public static boolean peutEtrePlacé(ArrayList<Integer> tab, String[][] plateau, int l ) {
-        boolean dispo = true;
+
         int x = tab.get(0);
         int y = tab.get(1);
+        int dir = (l > 1) ? tab.get(2) : 0;
         if (l == 1){
-            if (plateau[x][y].equals("- ")) {
-                return dispo;
-            }
-            else{
-                dispo = false;
+            if (!plateau[x][y].equals("-")) {
+                return  false;
             }
         }else{
-            int dir = tab.get(2);
-            if (plateau[x][y].equals("- ")) {
-                if ((dir == 1 && plateau[x][y+2].equals("- ")) || (dir == 2 && plateau[x][y-2].equals("- ")) || (dir == 3 && plateau[x+2][y].equals("- ")) || (dir == 4 && plateau[x-2][y].equals("- "))) {
-                    System.out.println("tout est bien place pour cette bateaux");
+            for (int i = 0; i< l;i++){
 
-                    return dispo;
+                int newX = x;
+                int newY = y;
+
+                if (dir == 1) {
+                    newX -= i;
+                } else if (dir == 2) {
+                    newX += i;
+                } else if (dir == 3) {
+                    newY += i;
+                } else if (dir == 4) {
+                    newY -= i;
                 }
-                else {
-                    dispo = false;
-                    System.out.println("la direction de bateaux cause problemes");
+                // controle de bordures ( il regarde si c'est bien sur le plateaux)
+                if (newX < 0 || newX >= plateau.length || newY < 0 || newY >= plateau[0].length) {
+                    return false;
                 }
+
+                // regarde si il y a des bateaux qui se croixent (overlap )
+                if (!plateau[newX][newY].equals("- ")) {
+                    return false;
+                }
+
+
             }
-            else {
-                dispo = false;
-                System.out.println("la x ou y  de bateaux cause problemes");
-            }
+            return true;
         }
+        return true;
 
 
 
-        return dispo;
+
 
 
     }
+
+
 
 
     public static ArrayList<Integer>  saisirBat(int longueur) {
@@ -159,6 +167,7 @@ public class methodesJeuNaval {
 
         }
 
+
         public static void ajouterSurPlateau(String[][] plateau) {
 
         int[] directionsX = {-1, 1, 0, 0};
@@ -174,7 +183,7 @@ public class methodesJeuNaval {
 
                 plateau[x][y] = "X";
 
-                if (i > 1) {
+                if (i > 1 && peutPlacer) {
                     int dir = bateau.get(2);
                     for (int j = 1; j < i; j++) {
                         int newX = x + (j * directionsX[dir - 1]);
@@ -232,6 +241,38 @@ public class methodesJeuNaval {
                 }
             }
 
+        }
+
+
+
+
+
+    }
+    public static boolean ilyaBateau(String[][] plateauOrdi,int x , int y){
+        String[][] plateau = plateauOrdi;
+
+        if (plateau[x][y].equals("X")){
+            return true;
+        }
+        else {
+            return false;
+        }
+    }
+
+    public static void saldırıOyuncu(String[][] plateauOrdi){
+        Scanner scanner = new Scanner(System.in);
+        int saisieX;
+        int saisieY;
+        System.out.println("hangi kareye saldırcan onu seç önce x sonra y");
+        saisieX = scanner.nextInt();
+        saisieY = scanner.nextInt();
+
+        if ((saisieX <=10 && saisieX >=1) && (saisieY <=10 && saisieY >=1) ){
+
+
+
+        }else {
+            System.out.println("t as mal donne les coordones");
         }
 
 
