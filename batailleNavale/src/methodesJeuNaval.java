@@ -13,7 +13,12 @@ public class methodesJeuNaval {
         String[][] plateau = new String[11][11];
         String[][]plateauOrdi = new String[11][11];
 
-        setupJeux(plateau, plateauOrdi);
+        remplirPlateauVide(plateauOrdi);
+        numéroterPlateau(plateauOrdi);
+        saisirBateauxPlateauOrdi(plateauOrdi);
+        afficherPlateau(plateauOrdi);
+        attackOrdi(plateauOrdi);
+        afficherPlateau(plateauOrdi);
     }
 
 
@@ -24,7 +29,6 @@ public class methodesJeuNaval {
             }
         }
     }
-
     public static void afficherPlateau(String[][] plateau) { // Cette procédure affiche le tableau 2D en forme de tableau (I J)
         System.out.println("La bataille navale oppose deux joueurs. Chaque joueur dispose de deux grilles carrées de côté 10, dont les lignes sont numérotées de 1 à 10 et les colonnes de A à J, ainsi que d'une flotte composée de quelques bateaux d'une à cinq cases de long.\n" +
                 "\n" +
@@ -43,8 +47,6 @@ public class methodesJeuNaval {
 
         }
     }
-
-
     public static void numéroterPlateau(String[][] plateau) { // Cette méthode remplace la première ligne et colonne par des chiffres afin d'avoir des coordonnées,le plateau de jeu devient donc 10*10 avec des numéros
 
         for (int j = 1; j < plateau[0].length; j++) {
@@ -57,57 +59,39 @@ public class methodesJeuNaval {
         }
 
     }
+    public static void ajouterSurPlateau(String[][] plateau) {
 
-    public static boolean peutEtrePlacé(ArrayList<Integer> tab, String[][] plateau, int l ) {
+        int[] directionsX = {-1, 1, 0, 0};
+        int[] directionsY = {0, 0, 1, -1};
 
-        int x = tab.get(0);
-        int y = tab.get(1);
-        int dir = (l > 1) ? tab.get(2) : 0;
-        if (l == 1){
-            if (!plateau[x][y].equals("-")) {
-                return  false;
+        for (int i = 1; i <= 3; i++) {
+            ArrayList<Integer> bateau = saisirBat(i);
+            boolean peutPlacer = peutEtrePlacé(bateau, plateau, i);
+
+            if (peutPlacer) {
+                int x = bateau.get(0);
+                int y = bateau.get(1);
+
+                plateau[x][y] = "X";
+
+                if (i > 1 && peutPlacer) {
+                    int dir = bateau.get(2);
+                    for (int j = 1; j < i; j++) {
+                        int newX = x + (j * directionsX[dir - 1]);
+                        int newY = y + (j * directionsY[dir - 1]);
+                        if (newX >= 0 && newX < plateau.length && newY >= 0 && newY < plateau[0].length) {
+                            plateau[newX][newY] = "X";
+                        }
+                    }
+
+
+
+                }
+            } else {
+                System.out.println("mal saise le bateaux." + i);
             }
-        }else{
-            for (int i = 0; i< l;i++){
-
-                int newX = x;
-                int newY = y;
-
-                if (dir == 1) {
-                    newX -= i;
-                } else if (dir == 2) {
-                    newX += i;
-                } else if (dir == 3) {
-                    newY += i;
-                } else if (dir == 4) {
-                    newY -= i;
-                }
-                // controle de bordures ( il regarde si c'est bien sur le plateaux)
-                if (newX < 0 || newX >= plateau.length || newY < 0 || newY >= plateau[0].length) {
-                    return false;
-                }
-
-                // regarde si il y a des bateaux qui se croixent (overlap )
-                if (!plateau[newX][newY].equals("- ")) {
-                    return false;
-                }
-
-
-            }
-            return true;
         }
-        return true;
-
-
-
-
-
-
     }
-
-
-
-
     public static ArrayList<Integer>  saisirBat(int longueur) {
         int saisie;
         boolean saisieCorrecte = false;
@@ -166,43 +150,47 @@ public class methodesJeuNaval {
 
 
         }
+    public static boolean peutEtrePlacé(ArrayList<Integer> tab, String[][] plateau, int l ) {
+        boolean peutplacer = true;
+        int x = tab.get(0);
+        int y = tab.get(1);
+        int dir = (l > 1) ? tab.get(2) : 0;
 
+        for (int i = 0; i< l;i++){
 
-        public static void ajouterSurPlateau(String[][] plateau) {
-
-        int[] directionsX = {-1, 1, 0, 0};
-        int[] directionsY = {0, 0, 1, -1};
-
-        for (int i = 1; i <= 3; i++) {
-            ArrayList<Integer> bateau = saisirBat(i);
-            boolean peutPlacer = peutEtrePlacé(bateau, plateau, i);
-
-            if (peutPlacer) {
-                int x = bateau.get(0);
-                int y = bateau.get(1);
-
-                plateau[x][y] = "X";
-
-                if (i > 1 && peutPlacer) {
-                    int dir = bateau.get(2);
-                    for (int j = 1; j < i; j++) {
-                        int newX = x + (j * directionsX[dir - 1]);
-                        int newY = y + (j * directionsY[dir - 1]);
-                        if (newX >= 0 && newX < plateau.length && newY >= 0 && newY < plateau[0].length) {
-                            plateau[newX][newY] = "X";
-                        }
-                    }
-
-
-
-                }
-            } else {
-                System.out.println("mal saise le bateaux." + i);
+            int newX = x;
+            int newY = y;
+            if (dir == 1) {
+                newX -= i;
+            } else if (dir == 2) {
+                    newX += i;
+            } else if (dir == 3) {
+                    newY += i;
+            } else if (dir == 4) {
+                    newY -= i;
             }
+            // controle de bordures ( il regarde si c'est bien sur le plateaux)
+            if (newX < 0 || newX >= plateau.length || newY < 0 || newY >= plateau[0].length) {
+                    return false;
+            }
+
+            // regarde si il y a des bateaux qui se croixent (overlap )
+            if (!plateau[newX][newY].equals("- ")) {
+                    return false;
+            }
+
+
+
+
         }
+        return peutplacer;
+
+
+
+
+
+
     }
-
-
     public static void setupJeux(String[][] plateau,String[][]plateauOrdi){
         remplirPlateauVide(plateau);
         remplirPlateauVide(plateauOrdi);
@@ -212,11 +200,10 @@ public class methodesJeuNaval {
         afficherPlateau(plateau);
         ajouterSurPlateau(plateau);
         afficherPlateau(plateau);
+        saisirBateauxPlateauOrdi(plateauOrdi);
+
 
     }
-
-
-
     public static void saisirBateauxPlateauOrdi(String[][] plateauOrdi) {
         int max = 10;
         int min = 1;
@@ -248,18 +235,12 @@ public class methodesJeuNaval {
 
 
     }
-    public static boolean ilyaBateau(String[][] plateauOrdi,int x , int y){
-        String[][] plateau = plateauOrdi;
+    public static void effacerBateau(String[][] attackedBoard ){
+        String[][] plateau = attackedBoard;
 
-        if (plateau[x][y].equals("X")){
-            return true;
-        }
-        else {
-            return false;
-        }
+
     }
-
-    public static void saldırıOyuncu(String[][] plateauOrdi){
+    public static void attackOrdi(String[][] plateauOrdi){
         Scanner scanner = new Scanner(System.in);
         int saisieX;
         int saisieY;
@@ -268,6 +249,13 @@ public class methodesJeuNaval {
         saisieY = scanner.nextInt();
 
         if ((saisieX <=10 && saisieX >=1) && (saisieY <=10 && saisieY >=1) ){
+            if (plateauOrdi[saisieX][saisieY].equals("X")){
+                System.out.println("t as bien trouve un bateaux de ton ennemi");
+                plateauOrdi[saisieX][saisieY] = "-";
+            }
+            else{
+                System.out.println("il y a pas de bateau la bas");
+            }
 
 
 
@@ -280,6 +268,15 @@ public class methodesJeuNaval {
 
 
     }
+    public static void attackPlayer(String[][] plateau){
+        int max = 10;
+        int min = 1;
+        int range = max - min + 1;
+        int randX = (int) (Math.random()*range) + min;
+        int randY = (int) (Math.random()*range) + min;
+        
+    }
+
 
 
 
