@@ -1,0 +1,59 @@
+public static void menuPrincipal(){
+
+        System.out.println("┌────────────────────────────────────────────────┐                                 \n" +
+                "│                                                │                                 \n" +
+                "│   BIENVENUE SUR LE JEU DE LA BATAILLE NAVALE   │                                 \n" +
+                "│      ┌──────────────────────────────────┐      │                                 \n" +
+                "│      │APPUYEZ SUR ENTREE POUR COMMENCER!│      │                                 \n" +
+                "│      └──────────────────────────────────┘      │                                 \n" +
+                "│                                                │                                 \n" +
+                "│                                                │                                 \n" +
+                "│                                                │                                 \n" +
+                "│                                                │                                 \n" +
+                "│                                                │                                \n" +
+                "│                                                │                                 \n" +
+                "└────────────────────────────────────────────────┘                                 ");
+
+
+    }
+    public static void menuDifficultee(){
+        System.out.println("┌────────────────────────────────────────────────┐                                 \n" +
+                "│                                                │                                 \n" +
+                "│            CHOIX DE LA DIFFICULTE              │                                 \n" +
+                "│      ┌──────────────────────────────────┐      │                                 \n" +
+                "│      │APPUYEZ SUR :                     │      │                                 \n" +
+                "│      │                                  │      │                                 \n" +
+                "│      │  1.POUR LA DIFFICULTE FACILE     │      │                                 \n" +
+                "│      │  2.POUR LA DIFFICULTE DURE       │      │                                 \n" +
+                "│      │                                  │      │                                 \n" +
+                "│      │                                  │      │                                 \n" +
+                "│      └──────────────────────────────────┘      │                                \n" +
+                "│                                                │                                 \n" +
+                "└────────────────────────────────────────────────┘                                 ");
+    }
+    public static int setupMenus(){
+        Scanner sc = new Scanner(System.in);
+        int choixUser=-1;
+        while (true) {
+            menuPrincipal();
+            String aAppuyé = sc.nextLine();
+            if (aAppuyé.isEmpty()) {
+                break;
+            }
+        }
+        while (true) {
+            menuDifficultee();
+            if (sc.hasNextInt()) {
+                choixUser = sc.nextInt();
+                sc.nextLine();
+                if (choixUser >= 1 && choixUser <= 2) {
+                    break;
+                }
+            } else {
+                sc.nextLine();
+                System.out.println("Entrée invalide. Veuillez entrer un nombre entre 1 et 2.");
+            }
+        }
+
+        return choixUser;
+    }
