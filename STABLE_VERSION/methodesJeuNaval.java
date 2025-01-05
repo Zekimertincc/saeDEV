@@ -305,6 +305,51 @@ public class methodesJeuNaval {
 
 
     }
+        public static void attackPlayer2(String[][] plateau) {
+        int size = plateau.length;
+
+        // Saldırıyı sırayla tüm hücrelere yapıyoruz
+        for (int y = 0; y < size; y++) {
+            for (int x = 0; x < size; x++) {
+                // Hücre boşsa (boş yer: "- ")
+                if (plateau[y][x].equals("- ")) {
+                    attackCell(plateau, x, y); // Boş hücreye saldırıyoruz
+                }
+            }
+        }
+    }
+
+    // attackCell metodu, belirtilen hücreye saldırıyor
+    public static void attackCell(String[][] plateau, int x, int y) {
+        if (plateau[y][x].equals("X")) { // Eğer hücrede gemi varsa
+            plateau[y][x] = "H"; // Vurdu
+            System.out.println("Vurdu! (" + x + ", " + y + ")");
+            
+            // Çevreye saldır
+            attackSurrounding(plateau, x, y);
+        } else if (plateau[y][x].equals("- ")) { // Eğer boşsa
+            plateau[y][x] = "M"; // Iska
+            System.out.println("Iska! (" + x + ", " + y + ")");
+        }
+    }
+
+    // attackSurrounding, vurduğumuz hücrenin çevresine saldırıyor (sağ, sol, yukarı, aşağı)
+    public static void attackSurrounding(String[][] plateau, int x, int y) {
+        // Yönler: Sağ, Sol, Aşağı, Yukarı
+        if (x + 1 < plateau.length && plateau[y][x + 1].equals("- ")) {
+            attackCell(plateau, x + 1, y); // Sağ
+        }
+        if (x - 1 >= 0 && plateau[y][x - 1].equals("- ")) {
+            attackCell(plateau, x - 1, y); // Sol
+        }
+        if (y + 1 < plateau.length && plateau[y + 1][x].equals("- ")) {
+            attackCell(plateau, x, y + 1); // Aşağı
+        }
+        if (y - 1 >= 0 && plateau[y - 1][x].equals("- ")) {
+            attackCell(plateau, x, y - 1); // Yukarı
+        }
+    }
+    
     public static void menuPrincipal(){
 
         System.out.println("┌────────────────────────────────────────────────┐                                 \n" +
