@@ -13,12 +13,11 @@ public class methodesJeuNaval {
         String[][] plateau = new String[11][11];
         String[][]plateauOrdi = new String[11][11];
 
-        remplirPlateauVide(plateauOrdi);
-        numéroterPlateau(plateauOrdi);
-        saisirBateauxPlateauOrdi(plateauOrdi);
-        afficherPlateau(plateauOrdi);
-        attackOrdi(plateauOrdi);
-        afficherPlateau(plateauOrdi);
+        setupJeux(plateau, plateauOrdi);
+        attackPlayer(plateau);
+        afficherPlateau(plateau);
+        methodesUtilisateur.ajouterSurPlateau(plateau);
+
     }
 
 
@@ -174,7 +173,7 @@ public class methodesJeuNaval {
                     return false;
             }
 
-            // regarde si il y a des bateaux qui se croixent (overlap )
+            // regarde si il y a des bateaux qui se croisent (overlap )
             if (!plateau[newX][newY].equals("- ")) {
                     return false;
             }
@@ -196,50 +195,55 @@ public class methodesJeuNaval {
         remplirPlateauVide(plateauOrdi);
         numéroterPlateau(plateau);
         numéroterPlateau(plateauOrdi);
-
-        afficherPlateau(plateau);
-        ajouterSurPlateau(plateau);
-        afficherPlateau(plateau);
         saisirBateauxPlateauOrdi(plateauOrdi);
+
+
 
 
     }
     public static void saisirBateauxPlateauOrdi(String[][] plateauOrdi) {
         int max = 10;
         int min = 1;
-        int range = max - min + 1;
+        int range = (max - min) + 1;
         int[] directionsX = {-1, 1, 0, 0};
         int[] directionsY = {0, 0, 1, -1};
-        String[][] plateau = plateauOrdi;
 
-        for (int i = 1; i < 4; i++) {
-            int longBateaux = (int)(Math.random()*3)+1;
-            int randX = (int) (Math.random() * range) + min;
-            int randY = (int) (Math.random() * range) + min;
-            plateau[randX][randY] = "X";
-            if (longBateaux > 1){
-                int randDir = (int)(Math.random()*4) +1;
-                for (int j = 1; j < longBateaux; j++) {
-                    int newX = randX + (j * directionsX[randDir - 1]);
-                    int newY =  randY+ (j * directionsY[randDir - 1]);
-                    if (newX >= 0 && newX < plateau.length && newY >= 0 && newY < plateau[0].length) {
-                        plateau[newX][newY] = "X";
+        for (int i = 1; i < 4; i++) { // Loop for ships of lengths 1, 2, and 3
+            boolean placed = false;
+
+            while (!placed) {
+                int randX = (int) (Math.random() * range) + min;
+                int randY = (int) (Math.random() * range) + min;
+                int randDir = (i > 1) ? (int) (Math.random() * 4) + 1 : 0; // Random direction for ships longer than 1
+
+                // Create an ArrayList to simulate user input for peutEtrePlacé
+                ArrayList<Integer> bateau = new ArrayList<>();
+                bateau.add(randX);
+                bateau.add(randY);
+                if (i > 1) {
+                    bateau.add(randDir);
+                }
+
+                // Check if the ship can be placed
+                if (peutEtrePlacé(bateau, plateauOrdi, i)) {
+                    // Place the ship
+                    plateauOrdi[randX][randY] = "X";
+
+                    for (int j = 1; j < i; j++) {
+                        int newX = randX + (j * directionsX[randDir - 1]);
+                        int newY = randY + (j * directionsY[randDir - 1]);
+                        if (newX > 0 && newX < plateauOrdi.length && newY > 0 && newY < plateauOrdi[0].length) {
+                            plateauOrdi[newX][newY] = "X";
+                        }
                     }
+
+                    placed = true; // Ship successfully placed
                 }
             }
-
         }
-
-
-
-
-
     }
-    public static void effacerBateau(String[][] attackedBoard ){
-        String[][] plateau = attackedBoard;
 
 
-    }
     public static void attackOrdi(String[][] plateauOrdi){
         Scanner scanner = new Scanner(System.in);
         int saisieX;
@@ -274,7 +278,13 @@ public class methodesJeuNaval {
         int range = max - min + 1;
         int randX = (int) (Math.random()*range) + min;
         int randY = (int) (Math.random()*range) + min;
-        
+        if (plateau[randX][randY].equals("X")){
+
+            plateau[randX][randY] = "-";
+        }
+
+
+
     }
 
 
