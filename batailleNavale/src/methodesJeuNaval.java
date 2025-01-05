@@ -196,6 +196,7 @@ public class methodesJeuNaval {
         numéroterPlateau(plateau);
         numéroterPlateau(plateauOrdi);
         saisirBateauxPlateauOrdi(plateauOrdi);
+        ajouterSurPlateau(plateau);
 
 
 
