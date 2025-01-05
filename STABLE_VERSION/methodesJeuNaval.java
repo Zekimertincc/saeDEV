@@ -306,14 +306,14 @@ public class methodesJeuNaval {
 
     }
         public static void attackPlayer2(String[][] plateau) {
-        int size = plateau.length;
+        int taille = plateau.length;
 
         
-        for (int y = 0; y < size; y++) {
-            for (int x = 0; x < size; x++) {
+        for (int y = 0; y < taille; y++) {
+            for (int x = 0; x < taille; x++) {
                 // Hücre boşsa (boş yer: "- ")
                 if (plateau[y][x].equals("- ")) {
-                    attackCell(plateau, x, y); 
+                    attaquerCase(plateau, x, y); 
                 }
             }
         }
@@ -326,7 +326,7 @@ public class methodesJeuNaval {
             System.out.println("Touché ! (" + x + ", " + y + ")");
             
             
-            attackSurrounding(plateau, x, y);
+            attaquerAutour(plateau, x, y);
         } else if (plateau[y][x].equals("- ")) { 
             plateau[y][x] = "M"; 
             System.out.println("Manqué! (" + x + ", " + y + ")");
@@ -337,16 +337,16 @@ public class methodesJeuNaval {
     public static void attaquerAutour(String[][] plateau, int x, int y) {
         
         if (x + 1 < plateau.length && plateau[y][x + 1].equals("- ")) {
-            attackCell(plateau, x + 1, y); 
+            attaquerCase(plateau, x + 1, y); 
         }
         if (x - 1 >= 0 && plateau[y][x - 1].equals("- ")) {
-            attackCell(plateau, x - 1, y); 
+            attaquerCase(plateau, x - 1, y); 
         }
         if (y + 1 < plateau.length && plateau[y + 1][x].equals("- ")) {
-            attackCell(plateau, x, y + 1); 
+            attaquerCase(plateau, x, y + 1); 
         }
         if (y - 1 >= 0 && plateau[y - 1][x].equals("- ")) {
-            attackCell(plateau, x, y - 1); 
+            attaquerCase(plateau, x, y - 1); 
         }
     }
     
