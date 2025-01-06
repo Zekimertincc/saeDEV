@@ -21,7 +21,7 @@ public class methodesJeuNaval {
 
         ArrayList<Integer> tabtestFaux = new ArrayList<>();
         tabtestFaux.add(1);
-        tabtestFaux.add(10); 
+        tabtestFaux.add(10);
         tabtestFaux.add(3);
         System.out.println(peutEtrePlacé(tabtestFaux,plateau,3));
 
@@ -125,15 +125,15 @@ public class methodesJeuNaval {
                     }
                 }
 
-                    System.out.println("saisir la direction de la façon suivante : 1 pour nord 2 pour sud 3 pour est et 4 pour ouest");
-                    saisie = scanner.nextInt();
-                    tab.add(saisie);
-                    if (saisie <= 4 && saisie >= 1) {
-                        counter++;
-                    }
-                    if (counter == 3) {
-                        saisieCorrecte = true;
-                    }
+                System.out.println("saisir la direction de la façon suivante : 1 pour nord 2 pour sud 3 pour est et 4 pour ouest");
+                saisie = scanner.nextInt();
+                tab.add(saisie);
+                if (saisie <= 4 && saisie >= 1) {
+                    counter++;
+                }
+                if (counter == 3) {
+                    saisieCorrecte = true;
+                }
 
 
             }while (!saisieCorrecte);
@@ -227,15 +227,15 @@ public class methodesJeuNaval {
         int[] directionsX = {-1, 1, 0, 0};
         int[] directionsY = {0, 0, 1, -1};
 
-        for (int i = 1; i < 4; i++) { // Loop for ships of lengths 1, 2, and 3
+        for (int i = 1; i < 4; i++) {
             boolean placed = false;
 
             while (!placed) {
                 int randX = (int) (Math.random() * range) + min;
                 int randY = (int) (Math.random() * range) + min;
-                int randDir = (i > 1) ? (int) (Math.random() * 4) + 1 : 0; // Random direction for ships longer than 1
+                int randDir = (i > 1) ? (int) (Math.random() * 4) + 1 : 0;
 
-                // Create an ArrayList to simulate user input for peutEtrePlacé
+
                 ArrayList<Integer> bateau = new ArrayList<>();
                 bateau.add(randX);
                 bateau.add(randY);
@@ -243,9 +243,8 @@ public class methodesJeuNaval {
                     bateau.add(randDir);
                 }
 
-                // Check if the ship can be placed
                 if (peutEtrePlacé(bateau, plateauOrdi, i)) {
-                    // Place the ship
+
                     plateauOrdi[randX][randY] = "X";
 
                     for (int j = 1; j < i; j++) {
@@ -256,7 +255,7 @@ public class methodesJeuNaval {
                         }
                     }
 
-                    placed = true; // Ship successfully placed
+                    placed = true;
                 }
             }
         }
@@ -305,51 +304,51 @@ public class methodesJeuNaval {
 
 
     }
-        public static void attackPlayer2(String[][] plateau) {
+    public static void attackPlayer2(String[][] plateau) {
         int taille = plateau.length;
 
-        
+
         for (int y = 0; y < taille; y++) {
             for (int x = 0; x < taille; x++) {
-                // Hücre boşsa (boş yer: "- ")
+
                 if (plateau[y][x].equals("- ")) {
-                    attaquerCase(plateau, x, y); 
+                    attaquerCase(plateau, x, y);
                 }
             }
         }
     }
 
-   
+
     public static void attaquerCase(String[][] plateau, int x, int y) {
-        if (plateau[y][x].equals("X")) { 
-            plateau[y][x] = "H"; 
+        if (plateau[y][x].equals("X")) {
+            plateau[y][x] = "H";
             System.out.println("Touché ! (" + x + ", " + y + ")");
-            
-            
+
+
             attaquerAutour(plateau, x, y);
-        } else if (plateau[y][x].equals("- ")) { 
-            plateau[y][x] = "M"; 
+        } else if (plateau[y][x].equals("- ")) {
+            plateau[y][x] = "M";
             System.out.println("Manqué! (" + x + ", " + y + ")");
         }
     }
 
-    
+
     public static void attaquerAutour(String[][] plateau, int x, int y) {
-        
+
         if (x + 1 < plateau.length && plateau[y][x + 1].equals("- ")) {
-            attaquerCase(plateau, x + 1, y); 
+            attaquerCase(plateau, x + 1, y);
         }
         if (x - 1 >= 0 && plateau[y][x - 1].equals("- ")) {
-            attaquerCase(plateau, x - 1, y); 
+            attaquerCase(plateau, x - 1, y);
         }
         if (y + 1 < plateau.length && plateau[y + 1][x].equals("- ")) {
-            attaquerCase(plateau, x, y + 1); 
+            attaquerCase(plateau, x, y + 1);
         }
         if (y - 1 >= 0 && plateau[y - 1][x].equals("- ")) {
-            attaquerCase(plateau, x, y - 1); 
+            attaquerCase(plateau, x, y - 1);
         }
     }
-    
+
     public static void menuPrincipal(){
 
         System.out.println("┌────────────────────────────────────────────────┐                                 \n" +
@@ -410,8 +409,7 @@ public class methodesJeuNaval {
         return choixUser;
     }
 
-    }
-
+}
 
 
 
