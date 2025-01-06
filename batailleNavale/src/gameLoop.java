@@ -1,13 +1,19 @@
+import java.util.Scanner;
+
 public class gameLoop {
 
     public static void main(String[] args){
+        Scanner sc = new Scanner(System.in);
         boolean gameOver = false;
         String[][] plateau = new String[11][11];
         String[][]plateauOrdi = new String[11][11];
 
-        int choix=0;
+        int x =1;
+        int y =1;
+        int[] lastHit = new int[2];
+        boolean[][] dejaAttacked = new boolean[10][10];
+        int choix = methodesJeuNaval.setupMenus();
 
-        methodesJeuNaval.setupMenus();
         methodesJeuNaval.setupJeux(plateau, plateauOrdi);
         System.out.println("\n");
         System.out.println("La bataille navale oppose deux joueurs. Chaque joueur dispose de deux grilles carrées de côté 10, dont les lignes sont numérotées de 1 à 10 et les colonnes de A à J, ainsi que d'une flotte composée de quelques bateaux d'une à cinq cases de long.\n" +
@@ -35,7 +41,7 @@ public class gameLoop {
             if (choix == 2){
 
 
-                methodesJeuNaval.attackPlayer2(plateau);
+                methodesJeuNaval.attackPlayer2(plateau,dejaAttacked,lastHit);
             }
 
             if (tousLesBatCoules(plateau)) {
@@ -43,7 +49,7 @@ public class gameLoop {
                 gameOver = true;
                 break;
             }
-            methodesJeuNaval.afficherPlateau(plateauOrdi);
+
             methodesJeuNaval.afficherPlateau(plateau);
         }while (!gameOver);
     }

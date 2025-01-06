@@ -5,7 +5,7 @@ import java.util.ArrayList;
 
 
 public class methodesJeuNaval {
-//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
+//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 <-- (dont get it mixed this time) token zeki
 
 
 
@@ -268,95 +268,124 @@ public class methodesJeuNaval {
     }
 
 
-    public static void attackOrdi(String[][] plateauOrdi){
+    public static void attackOrdi(String[][] plateauOrdi) {
         Scanner scanner = new Scanner(System.in);
-        int saisieX;
-        int saisieY;
-        System.out.println("Saisissez les coordonnées pour frapper un bateau Y et après X");
-        saisieX = scanner.nextInt();
-        saisieY = scanner.nextInt();
+        int saisieX, saisieY;
 
-        if ((saisieX <=10 && saisieX >=1) && (saisieY <=10 && saisieY >=1) ){
-            if (plateauOrdi[saisieX][saisieY].equals("X")){
-                System.out.println("tu as bien trouvé un bateau ennemi");
-                plateauOrdi[saisieX][saisieY] = "-";
+        while (true) {
+            System.out.println("Entrez les coordonnées pour attaquer (Y puis X) : ");
+            saisieX = scanner.nextInt();
+            saisieY = scanner.nextInt();
+
+            if (saisieX >= 1 && saisieX <= 10 && saisieY >= 1 && saisieY <= 10) {
+                if (plateauOrdi[saisieX][saisieY].equals("X")) {
+                    System.out.println("Vous avez touché un navire !");
+                    plateauOrdi[saisieX][saisieY] = "F";
+                    break;
+                } else if (plateauOrdi[saisieX][saisieY].equals("- ")) {
+                    System.out.println("Vous avez manqué !");
+                    plateauOrdi[saisieX][saisieY] = "M";
+                    break;
+                } else {
+                    System.out.println("Cette case a déjà été attaquée. Essayez un autre endroit.");
+                }
+            } else {
+                System.out.println("Coordonnées invalides ! Veuillez réessayer.");
             }
-            else{
-                System.out.println("il n'y a pas de bateau à ces coordonnées");
-            }
-
-
-
-        }else {
-            System.out.println("t as mal donne les coordones");
         }
-
-
-
-
-
     }
-    public static void attackPlayer(String[][] plateau){
+
+    public static void attackPlayer(String[][] plateau) {
         int max = 10;
         int min = 1;
         int range = max - min + 1;
-        int randX = (int) (Math.random()*range) + min;
-        int randY = (int) (Math.random()*range) + min;
-        if (plateau[randX][randY].equals("X")){
+        int randX, randY;
 
-            plateau[randX][randY] = "-";
+        do {
+            randX = (int) (Math.random() * range) + min;
+            randY = (int) (Math.random() * range) + min;
+        } while (!plateau[randX][randY].equals("X") && !plateau[randX][randY].equals("- "));
+
+        if (plateau[randX][randY].equals("X")) {
+            plateau[randX][randY] = "F";
+            System.out.println("L'ordinateur a touché un de vos navires ! (" + randX + ", " + randY + ")");
+        } else {
+            plateau[randX][randY] = "M";
+            System.out.println("L'ordinateur a manqué sa cible ! (" + randX + ", " + randY + ")");
         }
-
-
-
     }
-    public static void attackPlayer2(String[][] plateau) {
-        int size = plateau.length;
+
+    public static void attackPlayer2(String[][] plateau, boolean[][] dejaAttacked, int[] lastHit) {
+        int max = 10;
+        int[] directionsX = {-1, 1, 0, 0};
+        int[] directionsY = {0, 0, 1, -1};
+        if (lastHit == null) {
+            int x, y;
+            do {
+                x = (int) (Math.random() * (max + 1));
+                y = (int) (Math.random() * (max + 1));
+            } while (dejaAttacked[y][x]);
+            attackCell(plateau, x, y);
+            dejaAttacked[y][x] = true;
+
+            if (plateau[y][x].equals("F")) {
+                lastHit[0] = x;
+                lastHit[1] = y;
+            }
+        } else {
+
+            boolean hitFound = false;
+
+            for (int i = 0; i < directionsX.length; i++) {
+                int newX = lastHit[0] + directionsX[i];
+                int newY = lastHit[1] + directionsY[i];
 
 
-        for (int y = 0; y < size; y++) {
-            for (int x = 0; x < size; x++) {
+                if (newX >= 0 && newX <= max && newY >= 0 && newY <= max) {
+                    if (!dejaAttacked[newY][newX]) {
+                        attackCell(plateau, newX, newY);
+                        dejaAttacked[newY][newX] = true;
 
-                if (plateau[y][x].equals("- ")) {
-                    attackCell(plateau, x, y);
+
+                        if (plateau[newY][newX].equals("F")) {
+                            lastHit[0] = newX;
+                            lastHit[1] = newY;
+                            hitFound = true;
+                            break;
+                        }
+                    }
                 }
+            }
 
+
+            if (!hitFound) {
+                int x, y;
+                do {
+                    x = (int) (Math.random() * (max + 1));
+                    y = (int) (Math.random() * (max + 1));
+                } while (x >= dejaAttacked.length || y >= dejaAttacked[0].length || dejaAttacked[y][x]);
+                attackCell(plateau, x, y);
+                dejaAttacked[y][x] = true;
+
+
+                if (plateau[y][x].equals("F")) {
+                    lastHit[0] = x;
+                    lastHit[1] = y;
+                }
             }
         }
     }
 
-
     public static void attackCell(String[][] plateau, int x, int y) {
+
         if (plateau[y][x].equals("X")) {
-            plateau[y][x] = "H";
-            System.out.println("Vurdu! (" + x + ", " + y + ")");
-
-
-            attackSurrounding(plateau, x, y);
+            plateau[y][x] = "F";
+            System.out.println("Touché! (" + x + ", " + y + ")");
         } else if (plateau[y][x].equals("- ")) {
             plateau[y][x] = "M";
-            System.out.println("Iska! (" + x + ", " + y + ")");
+            System.out.println("Raté! (" + x + ", " + y + ")");
         }
     }
-
-
-    public static void attackSurrounding(String[][] plateau, int x, int y) {
-
-        if (x + 1 < plateau.length && plateau[y][x + 1].equals("- ")) {
-            attackCell(plateau, x + 1, y); // right
-        }
-        if (x - 1 >= 0 && plateau[y][x - 1].equals("- ")) {
-            attackCell(plateau, x - 1, y); // left
-        }
-        if (y + 1 < plateau.length && plateau[y + 1][x].equals("- ")) {
-            attackCell(plateau, x, y + 1); // down
-        }
-        if (y - 1 >= 0 && plateau[y - 1][x].equals("- ")) {
-            attackCell(plateau, x, y - 1); // up
-        }
-    }
-
-
     public static void menuPrincipal(){
 
         System.out.println("┌────────────────────────────────────────────────┐                                 \n" +
