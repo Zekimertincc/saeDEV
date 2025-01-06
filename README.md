@@ -2,4 +2,7 @@
 bataille navale 
 
 TODO LIST
-1- check if the direction selected fits the table 
+
+  good enoguh for now i think
+
+  hit me up when u wake up tomorrow
